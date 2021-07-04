@@ -3,7 +3,8 @@ const tag = "[Controller]";
 export default class Controller {
   constructor(
     store, 
-    { searchFormView, 
+    { 
+      searchFormView, 
       searchResultView,
       tabView
     }
@@ -23,6 +24,12 @@ export default class Controller {
     this.searchFormView
       .on('@submit', event => this.search(event.detail.value))
       .on('@reset', () => this.reset());
+    this.tabView
+      .on('@click', event => this.changeTab(event.detail.value));
+  }
+
+  changeTab(tab) {
+    console.log(tag, "changeTab", tab);
   }
 
   search(keyword) {
@@ -32,7 +39,7 @@ export default class Controller {
   }
 
   reset() {
-    console.log(tag, 'reset');
+    // console.log(tag, 'reset');
     this.store.searchKeyword = "";
     this.store.searchResult = [];
     this.render();

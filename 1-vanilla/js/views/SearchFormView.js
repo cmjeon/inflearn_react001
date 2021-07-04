@@ -5,6 +5,7 @@ const tag = "[SearchFormView]";
 
 export default class SearchFormView extends View {
   constructor() {
+    console.log(tag);
     super(qs("#search-form-view")); // view/View.js 의 element 에 들어감
 
     this.inputElement = qs("[type=text]", this.element);
@@ -19,6 +20,7 @@ export default class SearchFormView extends View {
   }
 
   bindEvents() {
+    // console.log(tag, "bindEvents");
     on(this.inputElement, "keyup", () => this.handleKeyup());
     on(this.element, "submit", (event) => this.handleSubmit(event));
     on(this.resetElement, "click", () => this.handleReset());
@@ -34,14 +36,14 @@ export default class SearchFormView extends View {
   }
 
   handleSubmit(event) {
+    // console.log(tag, "handleSubmit");
     event.preventDefault();
-    console.log(tag, "handleSubmit");
     const { value } = this.inputElement;
     this.emit("@submit", { value })
   }
 
   handleReset() {
-    console.log(tag, 'handleReset');
+    // console.log(tag, 'handleReset');
     this.emit('@reset');
   }
 }

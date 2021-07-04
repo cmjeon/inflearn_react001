@@ -3,7 +3,7 @@ import Store from "./store.js";
 import storage from "./storage.js";
 import SearchFormView from "./views/SearchFormView.js";
 import SearchResultView from "./views/SearchResultView.js";
-import TabView from './views/TabView.js';
+import TabView from "./views/TabView.js";
 
 const tag = '[main]';
 document.addEventListener("DOMContentLoaded", main);
