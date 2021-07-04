@@ -1,8 +1,11 @@
 import { qs } from '../helpers.js';
 import View from './View.js';
 
+const tag = "[SearchResultView]";
+
 export default class SearchResultView extends View {
   constructor() {
+    console.log(tag);
     super(qs('#search-result-view'))
     
     this.template = new Template()
