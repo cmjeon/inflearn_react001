@@ -35,7 +35,8 @@ export default class Controller {
     this.keywordListView
       .on('@click', event => this.search(event.detail.value));
     this.historyListView
-      .on('@click', event => this.search(event.detail.value));
+      .on('@click', event => this.search(event.detail.value))
+      .on("@remove", event => this.removeHistory(event.detail.value));
   }
 
   changeTab(tab) {
@@ -69,7 +70,7 @@ export default class Controller {
       this.historyListView.hide();
     } else if(this.store.selectedTab === TabTypes.HISTORY) {
       this.keywordListView.hide();
-      this.keywordListView.show(this.store.getHistoryList());
+      this.historyListView.show(this.store.getHistoryList());
     } else {
       throw "사용할 수 없는 탭입니다";
     }
@@ -83,5 +84,10 @@ export default class Controller {
     this.keywordListView.hide();
     this.historyListView.hide();
     this.searchResultView.show(this.store.searchResult);
+  }
+
+  removeHistory(keyword) {
+    this.store.removeHistory(keyword);
+    this.render();
   }
 }

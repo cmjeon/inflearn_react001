@@ -1,11 +1,20 @@
 import KeywordListView from "./KeywordListView.js";
-import { qs, formatRelativeDate } from "../helpers.js";
+import { delegate, qs, formatRelativeDate } from "../helpers.js";
 
 const tag = "[HistoryListView]";
 
 export default class HistoryListView extends KeywordListView {
   constructor() {
     super(qs("#history-list-view"), new Template());
+  }
+
+  bindEvents() {
+    delegate(this.element, "click", "button.btn-remove", (event) => this.handleClickRemoveButton(event));
+  }
+
+  handleClickRemoveButton(event) {
+    const value = event.target.parentElement.dataset.keyword;
+    this.emit('@remove', { value });
   }
 }
 
