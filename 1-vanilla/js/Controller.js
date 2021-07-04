@@ -30,16 +30,18 @@ export default class Controller {
       .on('@reset', () => this.reset());
     this.tabView
       .on('@click', event => this.changeTab(event.detail.value));
+    this.keywordListView
+      .on('@click', event => this.search(event.detail.value));
   }
 
   changeTab(tab) {
-    console.log(tag, "changeTab", tab);
+    // console.log(tag, "changeTab", tab);
     this.store.selectedTab = tab;
     this.render();
   }
 
   search(keyword) {
-    console.log(tag, keyword);
+    // console.log(tag, 'search', keyword);
     this.store.search(keyword);
     this.render();
   }
