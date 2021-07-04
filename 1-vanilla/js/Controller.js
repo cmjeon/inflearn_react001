@@ -44,7 +44,7 @@ export default class Controller {
       this.searchResultView.show(this.store.searchResult);
       return;
     }
-    this.tabView.show();
+    this.tabView.show(this.store.selectedTab);
     this.searchResultView.hide();
   }
 }
