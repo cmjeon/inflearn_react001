@@ -72,6 +72,7 @@ export default class Controller {
   }
 
   renderSearchResult() {
+    this.searchFormView.show(this.store.searchKeyword);
     this.tabView.hide();
     this.keywordListView.hide();
     this.searchResultView.show(this.store.searchResult);

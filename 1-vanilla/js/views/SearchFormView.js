@@ -15,6 +15,12 @@ export default class SearchFormView extends View {
     this.bindEvents();
   }
 
+  show(value = "") {
+    this.inputElement.value = value;
+    this.showResetButton(this.inputElement.value.length > 0);
+    super.show();
+  }
+
   showResetButton(visible = true) {
     this.resetElement.style.display = visible ? "block" : "none";
   }
