@@ -1,4 +1,6 @@
 import { TabTypes } from './views/TabView.js';
+import { createNextId } from './helpers.js';
+
 const tag = "[Store]";
 
 export default class Store {
@@ -18,6 +20,22 @@ export default class Store {
     this.searchResult = this.storage.productData.filter(product =>
       product.name.includes(keyword)
     );
+    this.addHistory(keyword);
+  }
+
+  addHistory(keyword) {
+    keyword  = keyword.trim();
+    if(!keyword) {
+      return;
+    }
+    const hasHistory = this.storage.historyData.some(history => history.keyword === keyword);
+    if(hasHistory) {
+      this.removeHistory(keyword);
+    }
+    const id = createNextId(this.storage.historyData);
+    const date = new Date();
+    this.storage.historyData.push({ id, keyword, date });
+    this.storage.historyData = this.storage.historyData.sort(this._sortHistory);
   }
 
   getKeywordList() {
@@ -29,7 +47,8 @@ export default class Store {
   }
 
   _sortHistory(history1, history2) {
-    return history2.date > history1.date;
+    return history2.date - history1.date;
+    // FF의 경우 return history2.date > history1.date;, Chorme 의 경우 - 로 해줘야 함
   }
 
   removeHistory(keyword) {
