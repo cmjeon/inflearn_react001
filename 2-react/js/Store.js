@@ -1,3 +1,4 @@
+import { createNextId } from "./helpers.js" 
 import storage from './storage.js';
 
 const tag = "[Store]";
@@ -11,12 +12,13 @@ class Store {
   }
 
   search(searchKeyword) {
+    this.addHistory(searchKeyword);
     return this.storage.productData.filter(
       (product) => product.name.includes(searchKeyword)
     );
   }
 
-  addHistory(keyword) {
+  addHistory(keyword = "") {
     keyword  = keyword.trim();
     if(!keyword) {
       return;
@@ -46,7 +48,9 @@ class Store {
   }
 
   removeHistory(keyword) {
-    this.storage.historyData = this.storage.historyData.filter(history => history.keyword != keyword);
+    this.storage.historyData = this.storage.historyData.filter(
+      (history) => history.keyword != keyword
+    );
   }
 }
 
