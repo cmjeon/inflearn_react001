@@ -1,5 +1,15 @@
 import store from './js/store.js';
 
+const TabType = {
+  KEYWORD: "KEYWORD",
+  HISTORY: "HISTORY"
+};
+
+const TabLabel = {
+  [TabType.KEYWORD]: "추천 검색어",
+  [TabType.HISTORY]: "최근 검색어 "
+}
+
 class App extends React.Component {
   constructor() {
     super();
@@ -7,7 +17,23 @@ class App extends React.Component {
       searchKeyword:'',
       searchResult: [],
       submitted: false,
+      selectedTab: TabType.KEYWORD,
+      keywordList: [],
     }
+  }
+
+  componentDidMount() {
+    const keywordList = store.getKeywordList();
+    this.setState({ keywordList });
+  }
+
+  search(searchKeyword) {
+    const searchResult = store.search(searchKEyword);
+    this.setState({
+      searchKeyword,
+      searchResult,
+      submitted: true,
+    })
   }
 
   handleReset() {
@@ -84,6 +110,39 @@ class App extends React.Component {
       )
     );
 
+    const keywordList = (
+      <ul className="list">
+        { this.state.keywordList.map( (item, index) => {
+          return (
+            <li
+              key={ item.id }
+              onClick={ () => this.search(item.keyword) }
+            >
+              <span className="number">{ index + 1 }</span>
+              <span>{ item.keyword }</span>
+            </li>
+          )
+        })}
+      </ul>
+    )
+        
+    const tabs = (
+      <>
+        <ul className="tabs">
+          { Object.values(TabType).map(tabType => {
+            return (
+              <li 
+                key={ tabType }
+                className={ this.state.selectedTab === tabType ? 'active' : ''}
+              >{ TabLabel[tabType] }</li>
+            )
+          })}
+        </ul>
+        { this.state.selectedTab === TabType.KEYWORD && ( keywordList )}
+        { this.state.selectedTab === TabType.HISTORY && ( <>최근 검색어</> )}
+      </>
+    )
+
     return (
       <>
         <header>
@@ -92,7 +151,7 @@ class App extends React.Component {
         <div className="container">
           { searchForm }
           <div className="content">
-              { this.state.submitted && ( searchResult )}
+              { this.state.submitted ? ( searchResult ) : ( tabs )}
           </div>
         </div>
       </>

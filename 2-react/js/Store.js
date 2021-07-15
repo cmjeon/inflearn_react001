@@ -41,7 +41,8 @@ class Store {
 
   _sortHistory(history1, history2) {
     return history2.date - history1.date;
-    // FF의 경우 return history2.date > history1.date;, Chorme 의 경우 - 로 해줘야 함
+    // firefox 의 경우 return history2.date > history1.date
+    // Chorme 의 경우 return history2.date - history1.date
   }
 
   removeHistory(keyword) {
