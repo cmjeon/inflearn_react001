@@ -9,12 +9,12 @@ const SearchResult = ({data=[]}) => {
 
   return (
     <ul className="result">
-      {data.map(({ id, imageUrl, name }) => {
+      {data.map(({ id, imageUrl, name }) => (
         <li key={id}>
           <img src={imageUrl} />
           <p>{name}</p> 
         </li>
-      })}
+      ))}
     </ul>
   );
 };
